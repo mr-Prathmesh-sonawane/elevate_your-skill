@@ -1,0 +1,39 @@
+/* NavBar.module.css */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: #4b0c5d;
+    color: white;
+  }
+  
+  .navbarLogo {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .navbarLogo a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbarLinks {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .navbarLink {
+    font-size: 1rem;
+  }
+  
+  .navbarLink a {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .navbarLink a:hover {
+    text-decoration: underline;
+  }
+  

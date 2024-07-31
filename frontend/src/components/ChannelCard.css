@@ -1,0 +1,44 @@
+.channel-card {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 16px;
+    margin-bottom: 16px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.channel-thumbnail {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-right: 16px;
+}
+
+.channel-info {
+    flex: 1;
+}
+
+.channel-info h2 {
+    color: white;
+    margin: 0 0 8px;
+    font-size: 1.5em;
+}
+
+.channel-info p {
+    color: white;
+    margin: 0 0 16px;
+}
+
+.channel-link {
+    text-decoration: none;
+    color: #1e90ff;
+    font-weight: bold;
+}
+
+.channel-link:hover {
+    text-decoration: underline;
+}
