@@ -1,10 +1,10 @@
+import os
+import sys
 from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 from flask_pymongo import PyMongo
 from werkzeug.security import generate_password_hash, check_password_hash
 from moviepy.editor import VideoFileClip, AudioFileClip, concatenate_videoclips
-import pyttsx3
-import os
 import google.generativeai as genai
 from PIL import Image
 import regex as re
@@ -12,12 +12,21 @@ from googleapiclient.discovery import build
 from dotenv import load_dotenv
 import pymongo
 from werkzeug.exceptions import NotFound
+from gtts import gTTS
+import logging
+
+# Setup logging
+logging.basicConfig(level=logging.DEBUG)
 
 load_dotenv()
 
 # Flask setup
 app = Flask(__name__)
 CORS(app, supports_credentials=True, origins=["http://localhost:3000"]) 
+
+# Logging environment variables
+logging.debug(f"Environment Variables: URL={os.getenv('URL')}, API_KEY={os.getenv('API_KEY')}, SEARCH_API_KEY={os.getenv('SEARCH_API_KEY')}")
+
 client = pymongo.MongoClient(os.getenv('URL'))
 db = client['usersdb']
 app.config['VIDEO_FOLDER'] = 'question_videos'
@@ -136,25 +145,19 @@ def create_video():
     return send_file(output_video, as_attachment=True)
 
 def create_audio_from_text(text, audio_file):
-    engine = pyttsx3.init()
-    voices = engine.getProperty('voices')
-    # Select a male voice
-    for voice in voices:
-        if 'male' in voice.name.lower():
-            engine.setProperty('voice', voice.id)
-            break
-    engine.save_to_file(text, audio_file)
-    engine.runAndWait()
+    tts = gTTS(text=text, lang='en')
+    tts.save(audio_file)
+
 
 def create_video_from_image_and_audio(audio_file, output_video):
     # Load the image using PIL
-    gif_clip = VideoFileClip("animated_avatar.gif")
+    gif_clip = VideoFileClip("avatar.gif")
 
     # Load the audio file
     audio_clip = AudioFileClip(audio_file)
 
     audio_duration = audio_clip.duration
-
+    
     gif_duration = gif_clip.duration
     repeat_count = int(audio_duration // gif_duration) + 1
 
